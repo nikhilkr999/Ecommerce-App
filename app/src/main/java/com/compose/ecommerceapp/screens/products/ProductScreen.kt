@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +29,7 @@ fun ProductScreen(
     productViewModel: ProductViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel()
 ){
-
+    val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
     LaunchedEffect(categoryId) {
         productViewModel.fetchProducts(categoryId)
     }
@@ -62,7 +63,8 @@ fun ProductScreen(
                                   },
                         onAddToCart = {
                             cartViewModel.addToCart(product)
-                        }
+                        },
+                        isInCart = cartItems.any { it.id == product.id }
                     )
                 }
 

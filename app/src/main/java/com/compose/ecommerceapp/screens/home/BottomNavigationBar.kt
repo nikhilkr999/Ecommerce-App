@@ -16,25 +16,32 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.compose.ecommerceapp.screens.navigation.Screens
+import com.compose.ecommerceapp.viewmodels.CartViewModel
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController
+    navController: NavController,
+    cartViewModel: CartViewModel = hiltViewModel()
 ){
+    val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
+    val cartCount = cartItems.size
+
     val currentRoute = ""
     val items = listOf(
         BottomNavItem("Home", Icons.Default.Home, Screens.Home.route),
         BottomNavItem("Categories", Icons.Default.Search, Screens.CategoryList.route),
         BottomNavItem("Wishlist", Icons.Default.Favorite, Screens.Cart.route, 5),
-        BottomNavItem("Cart", Icons.Default.ShoppingCart, Screens.Cart.route, 3),
+        BottomNavItem("Cart", Icons.Default.ShoppingCart, Screens.Cart.route, cartCount),
         BottomNavItem("Profile", Icons.Default.Person, Screens.Profile.route)
     )
 

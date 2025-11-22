@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.rememberAsyncImagePainter
+import com.compose.ecommerceapp.compose.AddToCartButton
 import com.compose.ecommerceapp.viewmodels.CartViewModel
 import com.compose.ecommerceapp.viewmodels.ProductDetailsViewModel
 
@@ -34,6 +36,8 @@ fun ProductDetailsScreen(
     productViewModel: ProductDetailsViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
+    val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
+    val isInCart = cartItems.any { it.id == productId }
 
     LaunchedEffect(productId) {
         productViewModel.fetchProduct(productId)
@@ -92,25 +96,14 @@ fun ProductDetailsScreen(
                 )
             }
 
-            // ----------------- FLOATING BUTTONS -----------------
             Column(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)   // Works here
+                modifier = Modifier.align(Alignment.TopEnd)
             ) {
-
-                // Add to Cart
-                IconButton(
+                AddToCartButton(
+                    isAdded = isInCart,
                     onClick = { cartViewModel.addToCart(product) },
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = "Add to Cart",
-                        tint = Color.White
-                    )
-                }
+                    modifier = Modifier.padding(4.dp)
+                )
 
                 // Add to Wishlist
                 IconButton(

@@ -25,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -98,6 +100,7 @@ fun SearchResultSection(
 ) {
     val searchResult = searchViewModel.searchResults.value
     val isSearching = searchViewModel.isSearching.value
+    val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = "Search Results",
@@ -123,7 +126,8 @@ fun SearchResultSection(
                     ProductItem(
                         product = product,
                         onClick = {navController.navigate(Screens.ProductDetails.createRoute(product.id))},
-                        onAddToCart = {cartViewModel.addToCart(product)}
+                        onAddToCart = {cartViewModel.addToCart(product)},
+                        isInCart = cartItems.any { it.id == product.id }
                     )
                 }
             }

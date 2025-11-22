@@ -28,13 +28,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import com.compose.ecommerceapp.compose.AddToCartButton
 import com.compose.ecommerceapp.model.Product
 
 @Composable
 fun ProductItem(
     product: Product,
     onClick: () -> Unit,
-    onAddToCart: () -> Unit
+    onAddToCart: () -> Unit,
+    isInCart: Boolean
 ){
     Card(
         modifier = Modifier.padding(8.dp)
@@ -87,22 +89,13 @@ fun ProductItem(
                     color = Color.White
                 )
             }
-            IconButton(
-                onClick = {onAddToCart()},
+            AddToCartButton(
+                isAdded = isInCart,
+                onClick = onAddToCart,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(8.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                        shape = CircleShape
-                    )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Add to Cart",
-                    tint = Color.White
-                )
-            }
+            )
         }
 
     }
