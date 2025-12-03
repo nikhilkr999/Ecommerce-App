@@ -29,12 +29,14 @@ import coil3.compose.rememberAsyncImagePainter
 import com.compose.ecommerceapp.compose.AddToCartButton
 import com.compose.ecommerceapp.viewmodels.CartViewModel
 import com.compose.ecommerceapp.viewmodels.ProductDetailsViewModel
+import com.compose.ecommerceapp.viewmodels.WishlistViewModel
 
 @Composable
 fun ProductDetailsScreen(
     productId: String,
     productViewModel: ProductDetailsViewModel = hiltViewModel(),
-    cartViewModel: CartViewModel = hiltViewModel()
+    cartViewModel: CartViewModel = hiltViewModel(),
+    wishlistViewModel: WishlistViewModel = hiltViewModel()
 ) {
     val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
     val isInCart = cartItems.any { it.id == productId }
@@ -108,7 +110,7 @@ fun ProductDetailsScreen(
                 // Add to Wishlist
                 IconButton(
                     onClick = {
-                        cartViewModel.addToCart(product)
+                        wishlistViewModel.addToWishList(product)
                     },
                     modifier = Modifier
                         .padding(4.dp)

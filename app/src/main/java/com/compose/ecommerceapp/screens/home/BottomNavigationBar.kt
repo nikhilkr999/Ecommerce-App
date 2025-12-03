@@ -27,20 +27,25 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.compose.ecommerceapp.screens.navigation.Screens
 import com.compose.ecommerceapp.viewmodels.CartViewModel
+import com.compose.ecommerceapp.viewmodels.WishlistViewModel
 
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    cartViewModel: CartViewModel = hiltViewModel()
+    cartViewModel: CartViewModel = hiltViewModel(),
+    wishlistViewModel: WishlistViewModel = hiltViewModel()
 ){
     val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
+    val wishlistItems by wishlistViewModel.wishlistItem.collectAsState(initial = emptyList())
+
     val cartCount = cartItems.size
+    val wishlistItemSize = wishlistItems.size
 
     val currentRoute = ""
     val items = listOf(
         BottomNavItem("Home", Icons.Default.Home, Screens.Home.route),
         BottomNavItem("Categories", Icons.Default.Search, Screens.CategoryList.route),
-        BottomNavItem("Wishlist", Icons.Default.Favorite, Screens.Cart.route, 5),
+        BottomNavItem("Wishlist", Icons.Default.Favorite, Screens.Wishlist.route, wishlistItemSize),
         BottomNavItem("Cart", Icons.Default.ShoppingCart, Screens.Cart.route, cartCount),
         BottomNavItem("Profile", Icons.Default.Person, Screens.Profile.route)
     )

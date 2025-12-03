@@ -12,3 +12,21 @@ data class Product(
     val categoryId: String = "",
     val desc: String = ""
 )
+
+fun Product.toWishlistProduct() = WishlistProduct(
+    id = id,
+    name = name,
+    price = price,
+    imageUrl = imageUrl,
+    categoryId = categoryId,
+    desc = desc
+)
+
+fun WishlistProduct.toProduct() = Product(
+    id = id,
+    name = name,
+    price = price,
+    imageUrl = imageUrl,
+    categoryId = categoryId,
+    desc = desc
+)

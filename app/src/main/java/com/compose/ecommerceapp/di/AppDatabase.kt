@@ -5,13 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.compose.ecommerceapp.model.Product
+import com.compose.ecommerceapp.model.WishlistProduct
 import com.compose.ecommerceapp.room.CartDao
+import com.compose.ecommerceapp.room.WishlistDao
 
-@Database(entities = [Product::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, WishlistProduct::class], version = 2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     //Defines Dao here to interact with db
 
     abstract fun cartDao() : CartDao
+    abstract fun wishlistDao() : WishlistDao
 
     //Singleton instance
     companion object{
@@ -31,7 +34,7 @@ abstract class AppDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "cart_database"
+                    "ecommerce_database"
                 ).build()
 
                 INSTANCE = instance

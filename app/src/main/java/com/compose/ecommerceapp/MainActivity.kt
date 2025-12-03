@@ -20,6 +20,7 @@ import com.compose.ecommerceapp.screens.products.ProductScreen
 import com.compose.ecommerceapp.screens.profile.LoginScreen
 import com.compose.ecommerceapp.screens.profile.ProfileScreen
 import com.compose.ecommerceapp.screens.profile.SignUpScreen
+import com.compose.ecommerceapp.screens.wishlist.WishlistScreen
 import com.compose.ecommerceapp.viewmodels.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,6 +56,9 @@ class MainActivity : ComponentActivity() {
 
                 composable(Screens.Cart.route){
                     CartScreen(navController = navController)
+                }
+                composable(Screens.Wishlist.route){
+                    WishlistScreen(navController)
                 }
 
                 composable(Screens.Profile.route) {

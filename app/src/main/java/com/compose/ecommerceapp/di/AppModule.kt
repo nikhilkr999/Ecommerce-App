@@ -3,7 +3,9 @@ package com.compose.ecommerceapp.di
 import android.content.Context
 import androidx.room.Dao
 import com.compose.ecommerceapp.repositories.CartRepository
+import com.compose.ecommerceapp.repositories.WishlistRepository
 import com.compose.ecommerceapp.room.CartDao
+import com.compose.ecommerceapp.room.WishlistDao
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -47,4 +49,15 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFireBaseAuth(): FirebaseAuth = Firebase.auth
+
+    @Provides
+    fun provideWishlistDao(appDatabase: AppDatabase): WishlistDao{
+        return appDatabase.wishlistDao()
+    }
+
+    @Provides
+    fun provideWishlistRepository(wishlistDao: WishlistDao): WishlistRepository {
+        return WishlistRepository(wishlistDao)
+    }
+
 }
