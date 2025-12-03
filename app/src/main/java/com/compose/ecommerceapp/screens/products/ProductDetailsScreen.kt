@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.rememberAsyncImagePainter
 import com.compose.ecommerceapp.compose.AddToCartButton
+import com.compose.ecommerceapp.util.WishlistButton
 import com.compose.ecommerceapp.viewmodels.CartViewModel
 import com.compose.ecommerceapp.viewmodels.ProductDetailsViewModel
 import com.compose.ecommerceapp.viewmodels.WishlistViewModel
@@ -40,6 +41,9 @@ fun ProductDetailsScreen(
 ) {
     val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
     val isInCart = cartItems.any { it.id == productId }
+
+    val wishlistItems by wishlistViewModel.wishlistItem.collectAsState(initial = emptyList())
+    val isWishlisted = wishlistItems.any { it.id == productId }
 
     LaunchedEffect(productId) {
         productViewModel.fetchProduct(productId)
@@ -108,20 +112,11 @@ fun ProductDetailsScreen(
                 )
 
                 // Add to Wishlist
-                IconButton(
-                    onClick = {
-                        wishlistViewModel.addToWishList(product)
-                    },
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .background(Color.Red, CircleShape)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Favorite,
-                        contentDescription = "Add to Wishlist",
-                        tint = Color.White
-                    )
-                }
+                WishlistButton(
+                    isWishlisted = isWishlisted,
+                    onClick = { wishlistViewModel.addToWishList(product) },
+                    modifier = Modifier.padding(4.dp)
+                )
             }
         }
     }

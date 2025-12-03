@@ -1,6 +1,7 @@
 package com.compose.ecommerceapp.screens.wishlist
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -32,7 +34,9 @@ import com.compose.ecommerceapp.model.WishlistProduct
 
 @Composable
 fun WishlistItemCard(
+    isInCart: Boolean,
     product: WishlistProduct,
+    onItemClicked: ()->Unit,
     onRemove: () -> Unit,
     onAddToCart: () -> Unit
 ) {
@@ -52,7 +56,7 @@ fun WishlistItemCard(
                         .fillMaxWidth()
                         .height(180.dp)
                         .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-                        .clickable{  /* TODO go to details page*/ },
+                        .clickable{  onItemClicked() },
                     contentScale = ContentScale.Crop
                 )
                 IconButton(
@@ -92,11 +96,16 @@ fun WishlistItemCard(
 
                     Button(
                         onClick = onAddToCart,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Add to Cart")
+                        Text(
+                            text = if (isInCart) "Added to cart" else "Add to Cart",
+                            color = Color.White
+                        )
                     }
+
                 }
             }
         }

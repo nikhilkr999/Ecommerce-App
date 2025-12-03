@@ -8,12 +8,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.compose.ecommerceapp.model.toProduct
+import com.compose.ecommerceapp.screens.navigation.Screens
 import com.compose.ecommerceapp.viewmodels.CartViewModel
 import com.compose.ecommerceapp.viewmodels.WishlistViewModel
 
@@ -24,6 +26,7 @@ fun WishlistScreen(
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
     val wishlistItems = viewModel.wishlistItem.collectAsState(initial = emptyList()).value
+    val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
 
     Column(
         modifier = Modifier
@@ -50,10 +53,17 @@ fun WishlistScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(wishlistItems) { product ->
+                    val isInCart = cartItems.any { it.id == product.id }
                     WishlistItemCard(
+                        isInCart = isInCart,
                         product = product,
                         onRemove = { viewModel.removeFromWishList (product) },
-                        onAddToCart = { cartViewModel.addToCart(product.toProduct()) }
+                        onAddToCart = { cartViewModel.addToCart(product.toProduct()) },
+                        onItemClicked = {
+                            navController.navigate(
+                                Screens.ProductDetails.createRoute(product.id)
+                            )
+                        }
                     )
                 }
             }
