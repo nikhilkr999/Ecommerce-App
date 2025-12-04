@@ -125,5 +125,8 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    implementation("com.google.android.gms:play-services-ads:23.2.0")
+    implementation("androidx.compose.ui:ui-viewbinding:<version>")
+
 
 }

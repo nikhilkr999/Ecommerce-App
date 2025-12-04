@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.rememberAsyncImagePainter
 import com.compose.ecommerceapp.compose.AddToCartButton
 import com.compose.ecommerceapp.manager.RecentProductsManager
+import com.compose.ecommerceapp.screens.ads.NativeAdComposable
 import com.compose.ecommerceapp.util.WishlistButton
 import com.compose.ecommerceapp.viewmodels.CartViewModel
 import com.compose.ecommerceapp.viewmodels.ProductDetailsViewModel
@@ -107,6 +108,7 @@ fun ProductDetailsScreen(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
+                NativeAdComposable()
             }
 
             Column(

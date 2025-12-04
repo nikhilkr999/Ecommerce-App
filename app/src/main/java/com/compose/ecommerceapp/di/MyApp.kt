@@ -1,6 +1,7 @@
 package com.compose.ecommerceapp.di
 
 import android.app.Application
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 
@@ -12,6 +13,8 @@ class MyApp: Application() {
 
         //Initialize firebase
         FirebaseApp.initializeApp(this)
+        MobileAds.initialize(this) {}
+
 
     }
 }
