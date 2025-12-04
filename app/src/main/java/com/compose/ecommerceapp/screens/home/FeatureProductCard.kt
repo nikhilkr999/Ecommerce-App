@@ -42,13 +42,15 @@ fun FeatureProductCard(
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Box {
-            DiscountBadge(
-                discountPercent = 5,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(8.dp)
-                    .zIndex(2f)
-            )
+            if (product.discount > 0) {
+                DiscountBadge(
+                    discountPercent = product.discount,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp)
+                        .zIndex(2f)
+                )
+            }
             Column(
                 modifier = Modifier
                     .padding(16.dp)

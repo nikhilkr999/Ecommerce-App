@@ -10,5 +10,6 @@ data class WishlistProduct(
     val price: Double = 0.0,
     val imageUrl: String = "",
     val categoryId: String = "",
-    val desc: String = ""
+    val desc: String = "",
+    val discount: Int = 0
 )

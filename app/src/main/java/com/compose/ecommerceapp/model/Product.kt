@@ -10,7 +10,8 @@ data class Product(
     val price: Double = 0.0,
     val imageUrl: String = "",
     val categoryId: String = "",
-    val desc: String = ""
+    val desc: String = "",
+    val discount: Int = 0
 )
 
 fun Product.toWishlistProduct() = WishlistProduct(
@@ -19,7 +20,8 @@ fun Product.toWishlistProduct() = WishlistProduct(
     price = price,
     imageUrl = imageUrl,
     categoryId = categoryId,
-    desc = desc
+    desc = desc,
+    discount = discount
 )
 
 fun WishlistProduct.toProduct() = Product(
@@ -28,5 +30,6 @@ fun WishlistProduct.toProduct() = Product(
     price = price,
     imageUrl = imageUrl,
     categoryId = categoryId,
-    desc = desc
+    desc = desc,
+    discount = discount
 )
