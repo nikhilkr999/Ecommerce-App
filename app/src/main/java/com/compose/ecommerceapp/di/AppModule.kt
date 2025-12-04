@@ -2,6 +2,7 @@ package com.compose.ecommerceapp.di
 
 import android.content.Context
 import androidx.room.Dao
+import com.compose.ecommerceapp.manager.RecentProductsManager
 import com.compose.ecommerceapp.repositories.CartRepository
 import com.compose.ecommerceapp.repositories.WishlistRepository
 import com.compose.ecommerceapp.room.CartDao
@@ -58,6 +59,12 @@ object AppModule {
     @Provides
     fun provideWishlistRepository(wishlistDao: WishlistDao): WishlistRepository {
         return WishlistRepository(wishlistDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRecentProductsManager(@ApplicationContext context: Context): RecentProductsManager {
+        return RecentProductsManager(context)
     }
 
 }

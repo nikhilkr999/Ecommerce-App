@@ -123,5 +123,7 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-base:18.4.0")
 
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
 
 }

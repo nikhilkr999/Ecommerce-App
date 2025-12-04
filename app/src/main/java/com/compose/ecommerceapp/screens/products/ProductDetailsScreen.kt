@@ -22,11 +22,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.rememberAsyncImagePainter
 import com.compose.ecommerceapp.compose.AddToCartButton
+import com.compose.ecommerceapp.manager.RecentProductsManager
 import com.compose.ecommerceapp.util.WishlistButton
 import com.compose.ecommerceapp.viewmodels.CartViewModel
 import com.compose.ecommerceapp.viewmodels.ProductDetailsViewModel
@@ -45,10 +47,15 @@ fun ProductDetailsScreen(
     val wishlistItems by wishlistViewModel.wishlistItem.collectAsState(initial = emptyList())
     val isWishlisted = wishlistItems.any { it.id == productId }
 
+    val recentProductsManager = RecentProductsManager(LocalContext.current)
+
     LaunchedEffect(productId) {
         productViewModel.fetchProduct(productId)
     }
-
+    LaunchedEffect(productId) {
+        recentProductsManager.addProduct(productId = productId)
+    }
+    
     val productState = productViewModel.product.collectAsState()
     val product = productState.value
 
